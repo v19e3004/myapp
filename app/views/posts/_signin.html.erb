@@ -1,9 +1,8 @@
-<% if session[:user_id] %>
+<% if current_user %>
     <div class='d-flex justify-content-end mb-2'>
-      <% if session[:user_id] %>
-          <%= User.find(session[:user_id]).display_name %>
-      <% else %>
-      <% end %>
+      <div class='mr-2'>
+          <%= current_user.display_name %>
+      </div>
       <%= link_to t('.signout'),
       session_path(session[:user_id]),
       method: :delete,
@@ -15,8 +14,10 @@
       <%= form_for :signin, url: sessions_path, html: {class: 'd-flex justify-content-end signin-form'} do |f| %>
         <%= f.text_field :signin_name, placeholder: 'signin name', class: 'form-control form-control-sm' %>
         <%= f.text_field :password, placeholder: 'password', class: 'form-control form-control-sm' %>
-        <%= f.submit t('.signin'), class: 'btn btn-sm btn-primary'  %>
+        <%= f.submit t('.signin'), class: 'btn btn-sm btn-primary' %>
       <% end %>
     <% else %>
+
     <% end %>
+    <%= link_to t('.signup'), new_user_path, class: 'btn btn-sm btn-secondary' %>
 <% end %>
